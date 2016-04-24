@@ -19,4 +19,4 @@ and use the mixin: syntax is as follows:
 )
 
 Any of the non-required fields can be overloaded by simply
-typing, for example, "$custom-transition-time : "5s".
+typing, for example, "$custom-transition-time : 5s".
