@@ -1,0 +1,155 @@
+@mixin generate-tooltips($selector, $border-color, $background-color, $text-color, $opac : null, $custom-border: null, $custom-transition: null, $custom-transition-time: null, $custom-delay-time: null, $custom-scale: null, $custom-border-radius : null)
+{
+    .#{$selector} {
+        position: relative;
+
+        //Sets our divs as hidden by default.
+        &:before, &:after{
+            position: absolute;
+            left: 50%;
+            opacity: 0;
+            z-index: -100;
+        }
+
+        //When we hover over with our mouse, the element is "dug out" and made so it can have opacity
+        &:hover, &:focus{
+            &:before, &:after{
+
+                @if ($opac == null)
+                {
+                    opacity: 1;
+                }
+                @else
+                {
+                   opacity: $opac;
+                }
+
+                z-index: 100;
+                //Scales our data back to original size.
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        &::before{
+            @if ($custom-border == null)
+            {
+                border-style: solid;
+                border-width: 1em .75em 0 .75em;
+                border-color: $border-color transparent transparent transparent;
+            }
+            @else 
+            {
+                border: $custom-border;
+            }
+
+            bottom: 100%;
+            margin-left: -.5em;
+            content: "";
+
+            @if ($custom-transition == null)
+            {
+                @if ($custom-transition-time == null)
+                {
+                    transition: all .65s cubic-bezier(.85, -0.18, .31, 1.26), opacity .65s .5s;
+                }
+                @else
+                {
+                    transition: all $custom-transition-time cubic-bezier(.85, -0.18, .31, 1.26), opacity .65s .5s;
+                }
+            }
+            @else 
+            {
+                @if ($custom-transition-time != null)
+                {
+                     @error("You entered a custom transition time when you already had a custom transition!");
+                }
+                @else 
+                {
+                    transition: $custom-transition;
+                }
+            }
+
+            @if ($custom-scale == null)
+            {
+                transform: scale(.6) translateY(-90%);
+            }
+            @else 
+            {
+                transform: scale($custom-scale) translateY(-90%);
+            }
+
+            @if ($custom-delay-time == null)
+            {
+                transition-delay: .3s;
+            }
+            @else
+            {
+                transition-delay: $custom-delay-time;
+
+            }
+
+        }
+
+        &::after{
+            background: $background-color;
+
+            @if ($custom-border-radius == null)
+            {
+                border-radius: .25em;
+            }
+
+            bottom: 180%;
+            color: $text-color;
+            width: 17.5em;
+            padding: 1em;
+            margin-left: -8.75em;
+            content: attr(data-tip);
+
+            @if ($custom-scale == null)
+            {
+                transform: scale(.6) translateY(50%);
+            }
+            @else 
+            {
+                transform: scale($custom-scale) translateY(50%);
+            }
+
+            @if ($custom-transition == null)
+            {
+                @if ($custom-transition-time == null)
+                {
+                    transition: all .25s cubic-bezier(.85, -0.18, .31, 1.26), opacity .65s .5s;
+                }
+                @else
+                {
+                    transition: all ($custom-transition-time / 2) cubic-bezier(.85, -0.18, .31, 1.26), opacity $custom-transition-time .5s;
+                }
+            }
+            @else 
+            {
+                @if ($custom-transition-time != null)
+                {
+                     @error("You entered a custom transition time when you already had a custom transition!");
+                }
+                @else 
+                {
+                    transition: $custom-transition;
+                }
+            }
+
+            @if ($custom-delay-time == null)
+            {
+                transition-delay: .25s;
+            }
+            @else
+            {
+                transition-delay: $custom-delay-time;
+            }
+        }
+
+        &:hover::after,
+        &:focus::after{
+            transition-delay: 0s;
+        }
+    }
+}
