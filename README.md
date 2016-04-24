@@ -8,13 +8,13 @@ and use the mixin: syntax is as follows:
 
 `@include generate-tooltips(`
 
-    selector **required**,
+    selector <required>,
     
-    border-color **required**,
+    border-color <required>,
     
-    background-color **required**,
+    background-color <required>,
     
-    text-color **required**,
+    text-color <required>,
     
     opacity <not required>,
     
