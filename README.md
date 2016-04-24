@@ -28,7 +28,7 @@ and use the mixin: syntax is as follows:
     
     custom-scale <not required>,
     
-    custom-border-radius<not required>
+    custom-border-radius <not required>
     
 `)`
 
